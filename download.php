@@ -15,12 +15,14 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $file = $result->fetch_assoc();
-    if (file_exists($file['filepath'])) {
+    $filepath = $file['filepath'];
+    
+    if (file_exists($filepath)) {
         header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="'.basename($file['filepath']).'"');
-        header('Content-Length: ' . filesize($file['filepath']));
-        readfile($file['filepath']);
+        header('Content-Type: ' . mime_content_type($filepath));
+        header('Content-Disposition: attachment; filename="'.basename($filepath).'"');
+        header('Content-Length: ' . filesize($filepath));
+        readfile($filepath);
         exit;
     }
 }

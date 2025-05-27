@@ -27,3 +27,6 @@ INSERT INTO users (username, password, role) VALUES
 ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
 
 -- Password for all accounts is "password"
+
+ALTER TABLE files ADD COLUMN description TEXT AFTER filename;
+ALTER TABLE files ADD COLUMN status ENUM('active', 'deleted') DEFAULT 'active' AFTER upload_time;

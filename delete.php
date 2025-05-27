@@ -15,12 +15,18 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $file = $result->fetch_assoc();
-    if (file_exists($file['filepath'])) {
-        unlink($file['filepath']);
+    $filepath = $file['filepath'];
+    
+    // Delete file from filesystem
+    if (file_exists($filepath)) {
+        unlink($filepath);
     }
+    
+    // Delete record from database
     $conn->query("DELETE FROM files WHERE id = $file_id");
     header("Location: dashboard.php?message=File+deleted+successfully");
 } else {
     header("Location: dashboard.php?error=You+don't+have+permission+to+delete+this+file");
 }
+exit();
 ?>
